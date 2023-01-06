@@ -12,7 +12,7 @@ const Banner = (props: Props) => {
         <span className={styles.title1}>Coffee</span>
         <span className={styles.title2}>Critic</span>
       </h1>
-      <p className={styles.subtitle}>Discover your local coffee shops!</p>
+      <p className={styles.subTitle}>Discover your local coffee shops!</p>
       <button className={styles.button}>{props.buttonText}</button>
     </div>
   )
