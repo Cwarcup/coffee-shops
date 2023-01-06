@@ -6,13 +6,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Component {...pageProps} />
-      <footer className={styles.footer}>
-        <div className="center">
-          <p>
-            <strong>Next.js</strong> by <a href="cwarcup.com">Curtis Warcup</a>
-          </p>
-        </div>
-      </footer>
     </>
   )
 }
