@@ -2,9 +2,7 @@
 
 .container {
   margin-bottom: 14rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
 }
 
 .main {
@@ -20,6 +18,8 @@
   position: absolute;
   top: 0px;
   z-index: 1;
+  opacity: 0.5;
+
 }
 
 .cardLayout {
@@ -68,6 +68,8 @@
   .cardLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+
 }
 
 @media (min-width: 768px) {
@@ -82,11 +84,14 @@
 
   .heroImage {
     right: 20%;
+    opacity: 1;
   }
 
   .cardLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+
 }
 
 @media (min-width: 1024px) {

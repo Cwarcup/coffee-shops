@@ -34,7 +34,7 @@
     /* 32px */
   ;
 
-  color: var(--text-white-100);
+  color: var(--text-blue);
 }
 
 .buttonWrapper {
@@ -47,7 +47,6 @@
   color: white;
   outline: 0;
   border: 0px;
-  border-radius: 0.5rem;
   padding-top: 1rem
     /* 16px */
   ;
@@ -162,6 +161,7 @@
   .buttonWrapper {
     justify-content: flex-start;
   }
+
 }
 
 /** xl breakpoint **/

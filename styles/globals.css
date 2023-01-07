@@ -52,6 +52,7 @@ p {
   font-weight: 500;
 }
 
+
 h1,
 h2,
 h3,
@@ -95,5 +96,5 @@ button:focus {
   --text-lightestBlue: #F1FAEE;
   --accent-red: #E63946;
   --text-black: rgba(17, 24, 39, 1);
-  --text-white-100: rgba(229, 231, 235, 1);
+  --text-white-100: white
 }

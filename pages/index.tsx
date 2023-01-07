@@ -1,8 +1,10 @@
 import Head from "next/head"
 import Link from "next/link"
 import styles from "../styles/Home.module.css"
+import Image from "next/image"
 
 import Banner from "../components/banner"
+import heroImage from "../public/static/hero-image.svg"
 
 export default function Home() {
   const handleOnButtonClick = () => {
@@ -20,14 +22,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.container}>
+      <main className={styles.main}>
         <Banner
           buttonText="View shops near me"
           handleOnClick={handleOnButtonClick}
         />
-        <Link href="/coffee-store/1">View Store 1</Link>
-        {/* dynamic route  */}
-        
+        <div className={styles.heroImage}>
+          <Image src={heroImage} alt="Coffee cup" />
+        </div>
       </main>
     </div>
   )
