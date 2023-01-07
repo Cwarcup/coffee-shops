@@ -3,16 +3,14 @@
   margin-bottom: 6rem;
   position: relative;
   z-index: 2;
+
 }
 
 .title {
   letter-spacing: -0.025em;
-  font-weight: 800;
-  color: var(--text-black);
 
-  font-size: 3rem
-    /* 48px */
-  ;
+  color: var(--text-black);
+  font-size: 3rem;
   line-height: 1;
 }
 
@@ -27,13 +25,8 @@
 
 .subTitle {
   margin-top: 0.75rem;
-  font-size: 1.5rem
-    /* 24px */
-  ;
-  line-height: 2rem
-    /* 32px */
-  ;
-
+  font-size: 1.5rem;
+  line-height: 2rem;
   color: var(--text-blue);
 }
 
@@ -47,24 +40,12 @@
   color: white;
   outline: 0;
   border: 0px;
-  padding-top: 1rem
-    /* 16px */
-  ;
-  padding-bottom: 1rem
-    /* 16px */
-  ;
-  font-size: 1.125rem
-    /* 18px */
-  ;
-  line-height: 1.75rem
-    /* 28px */
-  ;
-  padding-left: 2.5rem
-    /* 40px */
-  ;
-  padding-right: 2.5rem
-    /* 40px */
-  ;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .button:hover {
@@ -115,24 +96,12 @@
   }
 
   .button {
-    padding-top: 1rem
-      /* 16px */
-    ;
-    padding-bottom: 1rem
-      /* 16px */
-    ;
-    font-size: 1.125rem
-      /* 18px */
-    ;
-    line-height: 1.75rem
-      /* 28px */
-    ;
-    padding-left: 2.5rem
-      /* 40px */
-    ;
-    padding-right: 2.5rem
-      /* 40px */
-    ;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 }
 
@@ -140,13 +109,15 @@
 @media (min-width: 1024px) {
   .container {
     text-align: left;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
   }
 
   .title {
-    font-size: 4.5rem
-      /* 72px */
-    ;
+    font-size: 4.5rem;
     line-height: 1;
+
   }
 
   .title2 {

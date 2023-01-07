@@ -12,6 +12,7 @@ const Banner = (props: Props) => {
         <span className={styles.title1}>Coffee</span>
         <span className={styles.title2}>Critic</span>
       </h1>
+
       <p className={styles.subTitle}>Discover your local coffee shops!</p>
       <div className={styles.buttonWrapper}>
         <button className={styles.button}>{props.buttonText}</button>
