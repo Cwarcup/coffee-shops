@@ -1,6 +1,5 @@
 import Head from "next/head"
-
-import { Inter } from "@next/font/google"
+import Link from "next/link"
 import styles from "../styles/Home.module.css"
 
 import Banner from "../components/banner"
@@ -9,6 +8,7 @@ export default function Home() {
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
   }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -25,6 +25,9 @@ export default function Home() {
           buttonText="View shops near me"
           handleOnClick={handleOnButtonClick}
         />
+        <Link href="/coffee-store/1">View Store 1</Link>
+        {/* dynamic route  */}
+        
       </main>
     </div>
   )
