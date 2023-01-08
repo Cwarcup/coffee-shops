@@ -11,17 +11,16 @@
   max-width: 72rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  ;
 }
 
 .heroImage {
   position: absolute;
   top: 0px;
-  z-index: 1;
+  z-index: 0;
   opacity: 0.5;
-
 }
 
+/*  how the cards get layed out on the page */
 .cardLayout {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -53,6 +52,7 @@
   2xl: min-width: 1536px;
 **/
 
+/*   sm: min-width: 640px  */
 @media (min-width: 640px) {
   .container {
     padding-left: 1rem;
@@ -63,16 +63,14 @@
     margin-top: 3rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-
   }
 
   .cardLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-
 }
 
+/*   md: min-width: 768px */
 @media (min-width: 768px) {
   .container {
     padding-left: 2.5rem;
@@ -91,10 +89,9 @@
   .cardLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-
 }
 
+/*   lg: min-width: 1024px  */
 @media (min-width: 1024px) {
   .container {
     padding-left: 2.5rem;
@@ -116,6 +113,7 @@
   }
 }
 
+/*   2xl: min-width: 1536px */
 @media (min-width: 1280px) {
   .main {
     margin-top: 7rem;

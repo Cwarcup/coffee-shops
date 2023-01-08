@@ -8,6 +8,7 @@ type Props = {
   name: string
   imageURL: string
   href: string
+  className?: string
 }
 
 const Card = (props: Props) => {

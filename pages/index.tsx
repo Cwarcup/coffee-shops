@@ -36,11 +36,33 @@ export default function Home() {
             height={500}
           />
         </div>
-        <Card
-          name="Coffee Shop 1"
-          imageURL={heroImage}
-          href="/coffee-store/1"
-        />
+
+        <div className={styles.cardLayout}>
+          <Card
+            name="Coffee Shop 1"
+            imageURL={heroImage}
+            href="/coffee-store/1"
+            className={styles.card}
+          />
+          <Card
+            name="Coffee Shop 1"
+            imageURL={heroImage}
+            href="/coffee-store/1"
+            className={styles.card}
+          />
+          <Card
+            name="Coffee Shop 1"
+            imageURL={heroImage}
+            href="/coffee-store/1"
+            className={styles.card}
+          />
+          <Card
+            name="Coffee Shop 1"
+            imageURL={heroImage}
+            href="/coffee-store/1"
+            className={styles.card}
+          />
+        </div>
       </main>
     </div>
   )

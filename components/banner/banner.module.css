@@ -3,12 +3,10 @@
   margin-bottom: 6rem;
   position: relative;
   z-index: 2;
-
 }
 
 .title {
   letter-spacing: -0.025em;
-
   color: var(--text-black);
   font-size: 3rem;
   line-height: 1;
@@ -65,9 +63,7 @@
 /** sm breakpoint **/
 @media (min-width: 640px) {
   .title {
-    font-size: 3rem
-      /* 48px */
-    ;
+    font-size: 3rem /* 48px */;
     line-height: 1;
   }
 
@@ -85,9 +81,7 @@
 /** md breakpoint **/
 @media (min-width: 768px) {
   .title {
-    font-size: 3.75rem
-      /* 60px */
-    ;
+    font-size: 3.75rem /* 60px */;
     line-height: 1;
   }
 
@@ -117,7 +111,6 @@
   .title {
     font-size: 4.5rem;
     line-height: 1;
-
   }
 
   .title2 {
@@ -132,7 +125,6 @@
   .buttonWrapper {
     justify-content: flex-start;
   }
-
 }
 
 /** xl breakpoint **/

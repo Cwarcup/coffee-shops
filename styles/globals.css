@@ -2,21 +2,12 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: url('/static/mesh-gradient.png');
+  background: url("/static/mesh-gradient.png");
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-
 }
-
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-
 
 a {
   color: inherit;
@@ -30,7 +21,6 @@ a {
 p {
   font-weight: 500;
 }
-
 
 h1,
 h2,
@@ -69,11 +59,11 @@ button:focus {
 }
 
 :root {
-  --text-darkBlue: #1D3557;
-  --text-blue: #457B9D;
-  --text-lightBlue: #A8DADC;
-  --text-lightestBlue: #F1FAEE;
-  --accent-red: #E63946;
+  --text-darkBlue: #1d3557;
+  --text-blue: #457b9d;
+  --text-lightBlue: #a8dadc;
+  --text-lightestBlue: #f1faee;
+  --accent-red: #e63946;
   --text-black: rgba(17, 24, 39, 1);
-  --text-white-100: white
+  --text-white-100: white;
 }
