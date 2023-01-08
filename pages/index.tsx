@@ -6,7 +6,7 @@ import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
-type StoreDataTypes = {
+export type StoreDataTypes = {
   id: number
   name: string
   imgUrl: string
