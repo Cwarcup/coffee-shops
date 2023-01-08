@@ -16,7 +16,7 @@
 .heroImage {
   position: absolute;
   top: 0px;
-  z-index: 0;
+  z-index: 1;
   opacity: 0.5;
 }
 
@@ -35,9 +35,9 @@
 .heading2 {
   font-size: 2.25rem;
   line-height: 2.5rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
   margin-top: 2rem;
-  color: var(--text-white-100);
+  color: var(--text-blue);
 }
 
 .sectionWrapper {

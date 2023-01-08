@@ -6,8 +6,6 @@ import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
-// dummy data
-
 type StoreDataTypes = {
   id: number
   name: string
@@ -53,34 +51,37 @@ export default function Home({ coffeeStores }: Props = { coffeeStores: [] }) {
           />
         </div>
 
-        <div className={styles.cardLayout}>
-          {coffeeStores.map((coffeeStore: StoreDataTypes) => {
-            return (
-              <Card
-                key={coffeeStore.id}
-                name={coffeeStore.name}
-                imgUrl={coffeeStore.imgUrl}
-                websiteUrl={coffeeStore.websiteUrl}
-                address={coffeeStore.address}
-                neighbourhood={coffeeStore.neighbourhood}
-                href={`/coffee-store/${coffeeStore.id}`}
-              />
-            )
-          })}
-        </div>
+        {coffeeStores && coffeeStores.length > 0 ? (
+          <>
+            <h2 className={styles.heading2}>Vancouver Stores</h2>
+            <div className={styles.cardLayout}>
+              {coffeeStores.map((coffeeStore: StoreDataTypes) => {
+                return (
+                  <Card
+                    key={coffeeStore.id}
+                    name={coffeeStore.name}
+                    imgUrl={coffeeStore.imgUrl}
+                    websiteUrl={coffeeStore.websiteUrl}
+                    address={coffeeStore.address}
+                    neighbourhood={coffeeStore.neighbourhood}
+                    href={`/coffee-store/${coffeeStore.id}`}
+                  />
+                )
+              })}
+            </div>
+          </>
+        ) : null}
       </main>
     </div>
   )
 }
 
 // pre-render the coffee store page with getStaticProps
-// stored in a CDN
-
+// only runs at build time on the server, NOT client side
 export async function getStaticProps() {
   // use coffee-store.json as a mock API, hard coded data
   const coffeeStoresData = await require("../data/coffee-stores.json")
 
-  console.log(coffeeStoresData)
   return {
     props: {
       coffeeStores: coffeeStoresData,
