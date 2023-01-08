@@ -1,8 +1,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import Head from "next/head"
+import clx from "classnames"
 
 import type { StoreDataTypes } from "../index"
+import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
+
+import styles from "../../styles/coffee-store.module.css"
 
 type Props = {
   coffeeStore: StoreDataTypes
@@ -11,7 +15,9 @@ type Props = {
 const CoffeeStore = ({ coffeeStore }: Props) => {
   const { name, imgUrl, websiteUrl, address, neighbourhood } = coffeeStore
 
-  console.log("coffeeStore", coffeeStore)
+  const handleUpvoteClick = () => {
+    console.log("Upvote clicked!")
+  }
 
   return (
     <>
@@ -19,19 +25,42 @@ const CoffeeStore = ({ coffeeStore }: Props) => {
         <title>{name}</title>
         <meta name="description" content={`Coffee Critic - ${name}`} />
       </Head>
-      <h1>{}</h1>
-      <Link href="/" scroll={false}>
-        Back to home
-      </Link>
-      <h1>{name}</h1>
-      <Image src={imgUrl} alt={name} width={500} height={500} />
-      <p>
-        <a href={websiteUrl} target="_blank" rel="noopener noreferrer">
-          {websiteUrl}
-        </a>
-      </p>
-      <p>{address}</p>
-      <p>{neighbourhood}</p>
+      <div className={styles.container}>
+        <div className={styles.col1}>
+          <div className={styles.backToHomeLink}>
+            <Link href="/" scroll={false}>
+              Back to home
+            </Link>
+          </div>
+          <div className={styles.nameWrapper}>
+            <h1 className={styles.name}>{name}</h1>
+          </div>
+          <Image
+            src={imgUrl}
+            alt={name}
+            width={500}
+            height={500}
+            className={styles.storeImg}
+          />
+        </div>
+        <div className={clx("glass", styles.col2)}>
+          <div className={styles.iconWrapper}>
+            <BiMap className={styles.icon} />
+            <p className={styles.text}>{address}</p>
+          </div>
+          <div className={styles.iconWrapper}>
+            <BiCurrentLocation className={styles.icon} />
+            <p className={styles.text}>{neighbourhood}</p>
+          </div>
+          <div className={styles.iconWrapper}>
+            <BiStar className={styles.icon} />
+            <p className={styles.text}>{1}</p>
+          </div>
+          <button className={styles.upvoteButton} onClick={handleUpvoteClick}>
+            Upvote
+          </button>
+        </div>
+      </div>
     </>
   )
 }
