@@ -5,8 +5,12 @@ import cls from "classnames"
 import styles from "./card.module.css"
 
 type Props = {
+  key: number
   name: string
-  imageURL: string
+  imgUrl: string
+  websiteUrl: string
+  address: string
+  neighbourhood: string
   href: string
   className?: string
 }
@@ -22,7 +26,7 @@ const Card = (props: Props) => {
           <div className={styles.cardImageWrapper}>
             <Image
               className={styles.cardImage}
-              src={props.imageURL}
+              src={props.imgUrl}
               alt="Coffee Shop Image"
               width={260}
               height={260}

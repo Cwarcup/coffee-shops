@@ -6,6 +6,9 @@ import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
+// dummy data
+import coffeeStoresData from "../data/coffee-stores.json" 
+
 export default function Home() {
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
@@ -38,30 +41,19 @@ export default function Home() {
         </div>
 
         <div className={styles.cardLayout}>
-          <Card
-            name="Coffee Shop 1"
-            imageURL={heroImage}
-            href="/coffee-store/1"
-            className={styles.card}
-          />
-          <Card
-            name="Coffee Shop 1"
-            imageURL={heroImage}
-            href="/coffee-store/1"
-            className={styles.card}
-          />
-          <Card
-            name="Coffee Shop 1"
-            imageURL={heroImage}
-            href="/coffee-store/1"
-            className={styles.card}
-          />
-          <Card
-            name="Coffee Shop 1"
-            imageURL={heroImage}
-            href="/coffee-store/1"
-            className={styles.card}
-          />
+          {coffeeStoresData.map((coffeeStore) => {
+            return (
+              <Card
+                key={coffeeStore.id}
+                name={coffeeStore.name}
+                imgUrl={coffeeStore.imgUrl}
+                websiteUrl={coffeeStore.websiteUrl}
+                address={coffeeStore.address}
+                neighbourhood={coffeeStore.neighbourhood}
+                href={`/coffee-store/${coffeeStore.id}`}
+              />
+            )
+          })}
         </div>
       </main>
     </div>
