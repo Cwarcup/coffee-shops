@@ -7,9 +7,21 @@ import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
 // dummy data
-import coffeeStoresData from "../data/coffee-stores.json" 
 
-export default function Home() {
+type StoreDataTypes = {
+  id: number
+  name: string
+  imgUrl: string
+  websiteUrl: string
+  address: string
+  neighbourhood: string
+}
+
+type Props = {
+  coffeeStores: StoreDataTypes[]
+}
+
+export default function Home({ coffeeStores }: Props = { coffeeStores: [] }) {
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
   }
@@ -37,11 +49,12 @@ export default function Home() {
             alt="Coffee Cup Hero Image"
             width={500}
             height={500}
+            priority
           />
         </div>
 
         <div className={styles.cardLayout}>
-          {coffeeStoresData.map((coffeeStore) => {
+          {coffeeStores.map((coffeeStore: StoreDataTypes) => {
             return (
               <Card
                 key={coffeeStore.id}
@@ -58,4 +71,19 @@ export default function Home() {
       </main>
     </div>
   )
+}
+
+// pre-render the coffee store page with getStaticProps
+// stored in a CDN
+
+export async function getStaticProps() {
+  // use coffee-store.json as a mock API, hard coded data
+  const coffeeStoresData = await require("../data/coffee-stores.json")
+
+  console.log(coffeeStoresData)
+  return {
+    props: {
+      coffeeStores: coffeeStoresData,
+    },
+  }
 }
