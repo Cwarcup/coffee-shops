@@ -1,25 +1,55 @@
 import Head from "next/head"
 import styles from "../styles/Home.module.css"
 import Image from "next/image"
-import heroImage from "../public/static/hero-image.svg"
+import { useState } from "react"
 
+import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
-export type StoreDataTypes = {
-  id: number
+export type FoursquareResult = {
+  fsq_id: string
+  categories: Array<{
+    id: number
+    name: string
+    icon: {
+      prefix: string
+      suffix: string
+    }
+  }>
+  chains: any[]
+  distance: number
+  geocodes: {
+    main: {
+      latitude: number
+      longitude: number
+    }
+    roof: {
+      latitude: number
+      longitude: number
+    }
+  }
+  link: string
+  location: {
+    address: string
+    country: string
+    cross_street: string
+    formatted_address: string
+    locality: string
+    neighborhood: string[]
+    postcode: string
+    region: string
+  }
   name: string
-  imgUrl: string
-  websiteUrl: string
-  address: string
-  neighbourhood: string
+  related_places: any
+  timezone: string
 }
 
-type Props = {
-  coffeeStores: StoreDataTypes[]
+export type FoursquareResponse = {
+  coffeeStores: FoursquareResult[]
 }
 
-export default function Home({ coffeeStores }: Props = { coffeeStores: [] }) {
+export default function Home({ coffeeStores }: FoursquareResponse) {
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
   }
@@ -51,25 +81,25 @@ export default function Home({ coffeeStores }: Props = { coffeeStores: [] }) {
           />
         </div>
 
-        {coffeeStores && coffeeStores.length > 0 ? (
-          <>
-            <h2 className={styles.heading2}>Vancouver Stores</h2>
+        {coffeeStores ? (
+          <div className={styles.sectionWrapper}>
+            <h2 className={styles.heading2}>Stores near me</h2>
             <div className={styles.cardLayout}>
-              {coffeeStores.map((coffeeStore: StoreDataTypes) => {
+              {coffeeStores.map((coffeeStore) => {
                 return (
                   <Card
-                    key={coffeeStore.id}
+                    key={coffeeStore.fsq_id}
                     name={coffeeStore.name}
-                    imgUrl={coffeeStore.imgUrl}
-                    websiteUrl={coffeeStore.websiteUrl}
-                    address={coffeeStore.address}
-                    neighbourhood={coffeeStore.neighbourhood}
-                    href={`/coffee-store/${coffeeStore.id}`}
+                    imgUrl={
+                      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    }
+                    href={`/coffee-store/${coffeeStore.fsq_id}`}
+                    className={styles.card}
                   />
                 )
               })}
             </div>
-          </>
+          </div>
         ) : null}
       </main>
     </div>
@@ -80,11 +110,32 @@ export default function Home({ coffeeStores }: Props = { coffeeStores: [] }) {
 // only runs at build time on the server, NOT client side
 export async function getStaticProps() {
   // use coffee-store.json as a mock API, hard coded data
-  const coffeeStoresData = await require("../data/coffee-stores.json")
+  // const coffeeStoresData = await require("../data/coffee-stores.json")
+
+  // use Foursquare API to fetch coffee stores
+  async function fetchCoffeeStores() {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "fsq3VK7cEHfTEPInVt3TsaDFX+6jbmYFQY+jwZfltmm4W3w=",
+      },
+    }
+
+    const response = await fetch(
+      "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.1603536%2C-123.1845473&sort=RATING&limit=6",
+      options
+    )
+    const data = await response.json()
+
+    return data
+  }
+
+  const coffeeStoresData = await fetchCoffeeStores()
 
   return {
     props: {
-      coffeeStores: coffeeStoresData,
+      coffeeStores: coffeeStoresData.results,
     },
   }
 }

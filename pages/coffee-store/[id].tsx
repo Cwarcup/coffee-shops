@@ -3,17 +3,22 @@ import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
 
-import type { StoreDataTypes } from "../index"
+import type { FoursquareResult } from "../index"
 import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
 
 import styles from "../../styles/coffee-store.module.css"
 
 type Props = {
-  coffeeStore: StoreDataTypes
+  name: string
+  imgUrl: string
+  address?: string
+  neighbourhood?: string
+  href: string
+  className?: string
 }
 
-const CoffeeStore = ({ coffeeStore }: Props) => {
-  const { name, imgUrl, websiteUrl, address, neighbourhood } = coffeeStore
+const CoffeeStore = (props: Props) => {
+  const { name, imgUrl, address, neighbourhood } = props
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
