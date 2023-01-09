@@ -15,14 +15,20 @@ type Props = {
   neighbourhood?: string
   href: string
   className?: string
+  coffeeStore: FoursquareResult
 }
 
 const CoffeeStore = (props: Props) => {
-  const { name, imgUrl, address, neighbourhood } = props
+  const {
+    coffeeStore: { name, location, categories, geocodes },
+  } = props
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
   }
+
+  const imgUrl =
+    "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
 
   return (
     <>
@@ -51,11 +57,11 @@ const CoffeeStore = (props: Props) => {
         <div className={clx("glass", styles.col2)}>
           <div className={styles.iconWrapper}>
             <BiMap className={styles.icon} />
-            <p className={styles.text}>{address}</p>
+            <p className={styles.text}>{location.formatted_address}</p>
           </div>
           <div className={styles.iconWrapper}>
             <BiCurrentLocation className={styles.icon} />
-            <p className={styles.text}>{neighbourhood}</p>
+            <p className={styles.text}>{location.neighborhood[0]}</p>
           </div>
           <div className={styles.iconWrapper}>
             <BiStar className={styles.icon} />
@@ -78,11 +84,30 @@ export async function getStaticProps(staticProps: any) {
   const { id } = staticProps.params
 
   // get the coffee stores data
-  const coffeeStoresData = await require("../../data/coffee-stores.json")
+  // use Foursquare API to fetch coffee stores
+  async function fetchCoffeeStores() {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "fsq3VK7cEHfTEPInVt3TsaDFX+6jbmYFQY+jwZfltmm4W3w=",
+      },
+    }
+
+    const response = await fetch(
+      "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.1603536%2C-123.1845473&sort=RATING&limit=6",
+      options
+    )
+    const data = await response.json()
+
+    return data
+  }
+
+  const coffeeStoresData = await fetchCoffeeStores()
 
   // find the coffee store with the id from the URL
-  const coffeeStore: StoreDataTypes = coffeeStoresData.find(
-    (coffeeStore: StoreDataTypes) => coffeeStore.id === parseInt(id)
+  const coffeeStore: FoursquareResult = coffeeStoresData.results.find(
+    (coffeeStore: FoursquareResult) => coffeeStore.fsq_id === id
   )
 
   return {
@@ -94,15 +119,36 @@ export async function getStaticProps(staticProps: any) {
 
 // * generate coffee-store/[id].tsx page for each coffee store
 export async function getStaticPaths() {
-  const coffeeStoresData = await require("../../data/coffee-stores.json")
-
-  const paths = coffeeStoresData.map((coffeeStore: StoreDataTypes) => {
-    return {
-      params: {
-        id: coffeeStore.id.toString(),
+  // use Foursquare API to fetch coffee stores
+  async function fetchCoffeeStores() {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "fsq3VK7cEHfTEPInVt3TsaDFX+6jbmYFQY+jwZfltmm4W3w=",
       },
     }
-  })
+
+    const response = await fetch(
+      "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.1603536%2C-123.1845473&sort=RATING&limit=6",
+      options
+    )
+    const data = await response.json()
+
+    return data
+  }
+
+  const coffeeStoresData = await fetchCoffeeStores()
+
+  const paths = coffeeStoresData.results.map(
+    (coffeeStore: FoursquareResult) => {
+      return {
+        params: {
+          id: coffeeStore.fsq_id,
+        },
+      }
+    }
+  )
   return {
     paths,
     fallback: false,
