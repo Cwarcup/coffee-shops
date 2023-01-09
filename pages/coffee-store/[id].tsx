@@ -3,18 +3,13 @@ import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
 
-import type { FoursquareResult } from "../index"
+import type { FoursquareResult, FoursquareResponse } from "../index"
+
 import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
 
 import styles from "../../styles/coffee-store.module.css"
 
 type Props = {
-  name: string
-  imgUrl: string
-  address?: string
-  neighbourhood?: string
-  href: string
-  className?: string
   coffeeStore: FoursquareResult
 }
 
@@ -80,11 +75,9 @@ export default CoffeeStore
 // *  must pass the params object to getStaticProps
 export async function getStaticProps(staticProps: any) {
   // need to use the id from the URL to find the coffee store
-
   const { id } = staticProps.params
 
-  // get the coffee stores data
-  // use Foursquare API to fetch coffee stores
+  // get the coffee stores data, use Foursquare API to fetch coffee stores
   async function fetchCoffeeStores() {
     const options = {
       method: "GET",
