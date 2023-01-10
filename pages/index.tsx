@@ -1,7 +1,7 @@
 import Head from "next/head"
 import styles from "../styles/Home.module.css"
 import Image from "next/image"
-import { useState } from "react"
+import { fetchCoffeeStores } from "../lib/fetchCoffeeStores"
 
 import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
@@ -47,6 +47,7 @@ export type FoursquareResult = {
 
 export type FoursquareResponse = {
   coffeeStores: FoursquareResult[]
+  results: FoursquareResult[]
 }
 
 export default function Home({ coffeeStores }: FoursquareResponse) {
@@ -109,33 +110,11 @@ export default function Home({ coffeeStores }: FoursquareResponse) {
 // pre-render the coffee store page with getStaticProps
 // only runs at build time on the server, NOT client side
 export async function getStaticProps() {
-  // use coffee-store.json as a mock API, hard coded data
-  // const coffeeStoresData = await require("../data/coffee-stores.json")
-
-  // use Foursquare API to fetch coffee stores
-  async function fetchCoffeeStores() {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: "fsq3VK7cEHfTEPInVt3TsaDFX+6jbmYFQY+jwZfltmm4W3w=",
-      },
-    }
-
-    const response = await fetch(
-      "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.1603536%2C-123.1845473&sort=RATING&limit=6",
-      options
-    )
-    const data = await response.json()
-
-    return data
-  }
-
   const coffeeStoresData = await fetchCoffeeStores()
 
   return {
     props: {
-      coffeeStores: coffeeStoresData.results,
+      coffeeStores: coffeeStoresData,
     },
   }
 }

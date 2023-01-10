@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
+import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 
 import type { FoursquareResult, FoursquareResponse } from "../index"
 
@@ -73,33 +74,14 @@ const CoffeeStore = (props: Props) => {
 export default CoffeeStore
 
 // *  must pass the params object to getStaticProps
-export async function getStaticProps(staticProps: any) {
+export async function getStaticProps({ params }: { params: { id: string } }) {
   // need to use the id from the URL to find the coffee store
-  const { id } = staticProps.params
-
-  // get the coffee stores data, use Foursquare API to fetch coffee stores
-  async function fetchCoffeeStores() {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: "fsq3VK7cEHfTEPInVt3TsaDFX+6jbmYFQY+jwZfltmm4W3w=",
-      },
-    }
-
-    const response = await fetch(
-      "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.1603536%2C-123.1845473&sort=RATING&limit=6",
-      options
-    )
-    const data = await response.json()
-
-    return data
-  }
+  const { id } = params
 
   const coffeeStoresData = await fetchCoffeeStores()
 
   // find the coffee store with the id from the URL
-  const coffeeStore: FoursquareResult = coffeeStoresData.results.find(
+  const coffeeStore = coffeeStoresData.find(
     (coffeeStore: FoursquareResult) => coffeeStore.fsq_id === id
   )
 
@@ -112,36 +94,15 @@ export async function getStaticProps(staticProps: any) {
 
 // * generate coffee-store/[id].tsx page for each coffee store
 export async function getStaticPaths() {
-  // use Foursquare API to fetch coffee stores
-  async function fetchCoffeeStores() {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: "fsq3VK7cEHfTEPInVt3TsaDFX+6jbmYFQY+jwZfltmm4W3w=",
-      },
-    }
-
-    const response = await fetch(
-      "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.1603536%2C-123.1845473&sort=RATING&limit=6",
-      options
-    )
-    const data = await response.json()
-
-    return data
-  }
-
   const coffeeStoresData = await fetchCoffeeStores()
 
-  const paths = coffeeStoresData.results.map(
-    (coffeeStore: FoursquareResult) => {
-      return {
-        params: {
-          id: coffeeStore.fsq_id,
-        },
-      }
+  const paths = coffeeStoresData.map((coffeeStore: FoursquareResult) => {
+    return {
+      params: {
+        id: coffeeStore.fsq_id,
+      },
     }
-  )
+  })
   return {
     paths,
     fallback: false,
