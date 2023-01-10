@@ -2,60 +2,20 @@ import Head from "next/head"
 import styles from "../styles/Home.module.css"
 import Image from "next/image"
 import { fetchCoffeeStores } from "../lib/fetchCoffeeStores"
+import type { FetchCoffeeResponseType } from "../lib/fetchCoffeeStores"
 
 import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
-export type FoursquareResult = {
-  fsq_id: string
-  categories: Array<{
-    id: number
-    name: string
-    icon: {
-      prefix: string
-      suffix: string
-    }
-  }>
-  chains: any[]
-  distance: number
-  geocodes: {
-    main: {
-      latitude: number
-      longitude: number
-    }
-    roof: {
-      latitude: number
-      longitude: number
-    }
-  }
-  link: string
-  location: {
-    address: string
-    country: string
-    cross_street: string
-    formatted_address: string
-    locality: string
-    neighborhood: string[]
-    postcode: string
-    region: string
-  }
-  name: string
-  related_places: any
-  timezone: string
-  imgUrl?: string
-}
-
 export default function Home({
   coffeeStores,
 }: {
-  coffeeStores: FoursquareResult[]
+  coffeeStores: FetchCoffeeResponseType[]
 }) {
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
   }
-
-  console.log(coffeeStores)
 
   return (
     <div className={styles.container}>
@@ -91,10 +51,10 @@ export default function Home({
               {coffeeStores.map((coffeeStore) => {
                 return (
                   <Card
-                    key={coffeeStore.fsq_id}
+                    key={coffeeStore.id}
                     name={coffeeStore.name}
                     imgUrl={coffeeStore.imgUrl}
-                    href={`/coffee-store/${coffeeStore.fsq_id}`}
+                    href={`/coffee-store/${coffeeStore.id}`}
                     className={styles.card}
                   />
                 )

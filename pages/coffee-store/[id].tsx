@@ -5,17 +5,18 @@ import clx from "classnames"
 import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
-import type { FoursquareResult } from "../index"
+import type { FetchCoffeeResponseType } from "../../lib/fetchCoffeeStores"
 
-const CoffeeStore = ({ coffeeStore }: { coffeeStore: FoursquareResult }) => {
-  const { name, location, categories, geocodes } = coffeeStore
+const CoffeeStore = ({
+  coffeeStore,
+}: {
+  coffeeStore: FetchCoffeeResponseType
+}) => {
+  const { id, name, location, geocodes, distance, imgUrl } = coffeeStore
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
   }
-
-  const imgUrl =
-    "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
 
   return (
     <>
@@ -44,11 +45,11 @@ const CoffeeStore = ({ coffeeStore }: { coffeeStore: FoursquareResult }) => {
         <div className={clx("glass", styles.col2)}>
           <div className={styles.iconWrapper}>
             <BiMap className={styles.icon} />
-            <p className={styles.text}>{location.formatted_address}</p>
+            <p className={styles.text}>{location.address}</p>
           </div>
           <div className={styles.iconWrapper}>
             <BiCurrentLocation className={styles.icon} />
-            <p className={styles.text}>{location.neighborhood[0]}</p>
+            <p className={styles.text}>{location.neighborhood}</p>
           </div>
           <div className={styles.iconWrapper}>
             <BiStar className={styles.icon} />
@@ -73,7 +74,7 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 
   // find the coffee store with the id from the URL
   const coffeeStore = coffeeStoresData.find(
-    (coffeeStore: FoursquareResult) => coffeeStore.fsq_id === id
+    (coffeeStore: FetchCoffeeResponseType) => coffeeStore.id === id
   )
 
   return {
@@ -87,10 +88,10 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 export async function getStaticPaths() {
   const coffeeStoresData = await fetchCoffeeStores()
 
-  const paths = coffeeStoresData.map((coffeeStore: FoursquareResult) => {
+  const paths = coffeeStoresData.map((coffeeStore: FetchCoffeeResponseType) => {
     return {
       params: {
-        id: coffeeStore.fsq_id,
+        id: coffeeStore.id,
       },
     }
   })

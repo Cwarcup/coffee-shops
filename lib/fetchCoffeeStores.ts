@@ -1,10 +1,59 @@
 import { fetchCoffeePhotos } from "./fetchCoffeePhotos"
 
-import type { FoursquareResult } from "../pages/index"
+// type of raw data response from FourSquare API
+type FoursquareResult = {
+  fsq_id: string
+  categories: Array<{
+    id: number
+    name: string
+    icon: {
+      prefix: string
+      suffix: string
+    }
+  }>
+  chains: any[]
+  distance: number
+  geocodes: {
+    main: {
+      latitude: number
+      longitude: number
+    }
+    roof: {
+      latitude: number
+      longitude: number
+    }
+  }
+  link: string
+  location: {
+    address: string
+    country: string
+    cross_street: string
+    formatted_address: string
+    locality: string
+    neighborhood: string[]
+    postcode: string
+    region: string
+  }
+  name: string
+  related_places: any
+  timezone: string
+  imgUrl?: string
+}
 
-type FoursquareResponse = {
-  results: FoursquareResult[]
-  content: any
+// type of mutated data response from FourSquare API and Unsplash
+export type FetchCoffeeResponseType = {
+  id: string
+  name: string
+  location: {
+    address: string
+    neighborhood: string
+  }
+  geocodes: {
+    lat: number
+    lng: number
+  }
+  distance: number
+  imgUrl: string
 }
 
 type Query = {
@@ -20,7 +69,9 @@ const getUrlForCoffeeStores = (query: Query) => {
   return url
 }
 
-export const fetchCoffeeStores = async (): Promise<FoursquareResult[]> => {
+export const fetchCoffeeStores = async (): Promise<
+  FetchCoffeeResponseType[]
+> => {
   // use Foursquare API to fetch coffee stores
   const options = {
     method: "GET",
@@ -38,13 +89,23 @@ export const fetchCoffeeStores = async (): Promise<FoursquareResult[]> => {
     }),
     options
   )
-  const data: FoursquareResponse = await response.json()
+  const data = await response.json()
 
   const photos = await fetchCoffeePhotos()
 
-  return data.results.map((result, index) => {
+  return data.results.map((result: FoursquareResult, index: any) => {
     return {
-      ...result,
+      id: result.fsq_id,
+      name: result.name,
+      location: {
+        address: result.location.address,
+        neighborhood: result.location?.neighborhood ?? "",
+      },
+      geocodes: {
+        lat: result.geocodes.main.latitude,
+        lng: result.geocodes.main.longitude,
+      },
+      distance: result.distance,
       imgUrl: photos[index],
     }
   })
