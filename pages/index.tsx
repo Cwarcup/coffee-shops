@@ -4,6 +4,8 @@ import Image from "next/image"
 import { fetchCoffeeStores } from "../lib/fetchCoffeeStores"
 import type { FetchCoffeeResponseType } from "../lib/fetchCoffeeStores"
 
+import useUserLocation from "../hooks/useUserLocation"
+
 import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
@@ -13,8 +15,11 @@ export default function Home({
 }: {
   coffeeStores: FetchCoffeeResponseType[]
 }) {
+  const { latLong, handleTrackLocation, locationErrorMsg, isFindingLocation } =
+    useUserLocation()
+
   const handleOnButtonClick = () => {
-    console.log("Button clicked!")
+    handleTrackLocation()
   }
 
   return (
@@ -31,9 +36,13 @@ export default function Home({
 
       <main className={styles.main}>
         <Banner
-          buttonText="View shops near me"
+          buttonText={isFindingLocation ? "locating..." : "Find my location"}
           handleOnClick={handleOnButtonClick}
         />
+        {locationErrorMsg ? (
+          <p className={styles.locationErrorMsg}>{locationErrorMsg}</p>
+        ) : null}
+
         <div className={styles.heroImage}>
           <Image
             src={heroImage}

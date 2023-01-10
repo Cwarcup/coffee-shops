@@ -1,8 +1,10 @@
+import useUserLocation from "../../hooks/useUserLocation"
+
 import styles from "./banner.module.css"
 
 type Props = {
   buttonText: string
-  handleOnClick?: () => void
+  handleOnClick: () => void
 }
 
 const Banner = (props: Props) => {
