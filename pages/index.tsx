@@ -46,7 +46,7 @@ export default function Home({
 
         {coffeeStores ? (
           <div className={styles.sectionWrapper}>
-            <h2 className={styles.heading2}>Stores near me</h2>
+            <h2 className={styles.heading2}>Richmond Stores</h2>
             <div className={styles.cardLayout}>
               {coffeeStores.map((coffeeStore) => {
                 return (

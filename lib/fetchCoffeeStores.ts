@@ -47,6 +47,8 @@ export type FetchCoffeeResponseType = {
   location: {
     address: string
     neighborhood: string
+    cross_street: string
+    postcode: string
   }
   geocodes: {
     lat: number
@@ -93,13 +95,15 @@ export const fetchCoffeeStores = async (): Promise<
 
   const photos = await fetchCoffeePhotos()
 
-  return data.results.map((result: FoursquareResult, index: any) => {
+  return data.results.map((result: FoursquareResult, index: number) => {
     return {
       id: result.fsq_id,
       name: result.name,
       location: {
-        address: result.location.address,
+        address: result.location?.address ?? "",
         neighborhood: result.location?.neighborhood ?? "",
+        cross_street: result.location?.cross_street ?? "",
+        postcode: result.location?.postcode ?? "",
       },
       geocodes: {
         lat: result.geocodes.main.latitude,

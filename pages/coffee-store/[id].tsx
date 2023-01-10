@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
-import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
+import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
 import type { FetchCoffeeResponseType } from "../../lib/fetchCoffeeStores"
@@ -27,7 +27,12 @@ const CoffeeStore = ({
       <div className={styles.container}>
         <div className={styles.col1}>
           <div className={styles.backToHomeLink}>
-            <Link href="/" scroll={false}>
+            <Link
+              href="/"
+              scroll={false}
+              className={styles.backToHomeContainer}
+            >
+              <BiArrowBack className={styles.backToHomeArrow} />
               Back to home
             </Link>
           </div>
@@ -45,7 +50,9 @@ const CoffeeStore = ({
         <div className={clx("glass", styles.col2)}>
           <div className={styles.iconWrapper}>
             <BiMap className={styles.icon} />
-            <p className={styles.text}>{location.address}</p>
+            <p className={styles.text}>
+              {location.address} {location.postcode}
+            </p>
           </div>
           <div className={styles.iconWrapper}>
             <BiCurrentLocation className={styles.icon} />

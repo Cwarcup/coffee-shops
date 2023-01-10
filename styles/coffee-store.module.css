@@ -22,6 +22,18 @@
   font-weight: 700;
 }
 
+.backToHomeContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem /* 8px */;
+}
+
+/* on hover, make the child component with className backToHomeArrow translate left */
+.backToHomeContainer:hover .backToHomeArrow {
+  transform: translateX(-0.25rem /* 4px */);
+  transition: transform 0.2s ease-in-out;
+}
+
 .nameWrapper {
   margin-bottom: 1rem /* 16px */;
   margin-top: 1rem /* 16px */;
