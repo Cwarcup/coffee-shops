@@ -4,7 +4,7 @@ import Head from "next/head"
 import clx from "classnames"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 
-import type { FoursquareResult, FoursquareResponse } from "../index"
+import type { FoursquareResult } from "../index"
 
 import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
 

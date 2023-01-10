@@ -45,12 +45,12 @@ export type FoursquareResult = {
   timezone: string
 }
 
-export type FoursquareResponse = {
+export default function Home({
+  coffeeStores,
+}: {
   coffeeStores: FoursquareResult[]
-  results: FoursquareResult[]
-}
-
-export default function Home({ coffeeStores }: FoursquareResponse) {
+}) {
+  console.log(coffeeStores)
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
   }

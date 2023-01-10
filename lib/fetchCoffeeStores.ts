@@ -1,11 +1,25 @@
 import { FoursquareResult } from "../pages/index"
 
+type FoursquareResponse = {
+  results: FoursquareResult[]
+  content: any
+}
+
+type Query = {
+  query: string
+  LatLong: string
+  limit: number
+}
+// latLong format: "49.170128,-123.182828"
+const getUrlForCoffeeStores = (query: Query) => {
+  const url = `https://api.foursquare.com/v3/places/search?query=${
+    query.query
+  }&ll=${query.LatLong}&sort=DISTANCE&limit=${query.limit.toString()}`
+  return url
+}
+
 export const fetchCoffeeStores = async (): Promise<FoursquareResult[]> => {
-  // use coffee-store.json as a mock API, hard coded data
-  // const coffeeStoresData = await require("../data/coffee-stores.json")
-
   // use Foursquare API to fetch coffee stores
-
   const options = {
     method: "GET",
     headers: {
@@ -15,10 +29,14 @@ export const fetchCoffeeStores = async (): Promise<FoursquareResult[]> => {
   }
 
   const response = await fetch(
-    "https://api.foursquare.com/v3/places/search?query=coffee&ll=49.170128%2C-123.182828&sort=DISTANCE&limit=6",
+    getUrlForCoffeeStores({
+      query: "coffee",
+      LatLong: "49.17,-123.18",
+      limit: 10,
+    }),
     options
   )
-  const data = await response.json()
+  const data: FoursquareResponse = await response.json()
 
   return data.results
 }
