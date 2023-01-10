@@ -1,4 +1,6 @@
-import { FoursquareResult } from "../pages/index"
+import { fetchCoffeePhotos } from "./fetchCoffeePhotos"
+
+import type { FoursquareResult } from "../pages/index"
 
 type FoursquareResponse = {
   results: FoursquareResult[]
@@ -32,11 +34,18 @@ export const fetchCoffeeStores = async (): Promise<FoursquareResult[]> => {
     getUrlForCoffeeStores({
       query: "coffee",
       LatLong: "49.17,-123.18",
-      limit: 10,
+      limit: 6,
     }),
     options
   )
   const data: FoursquareResponse = await response.json()
 
-  return data.results
+  const photos = await fetchCoffeePhotos()
+
+  return data.results.map((result, index) => {
+    return {
+      ...result,
+      imgUrl: photos[index],
+    }
+  })
 }

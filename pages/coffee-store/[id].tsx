@@ -2,22 +2,13 @@ import Link from "next/link"
 import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
+import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
-
+import styles from "../../styles/coffee-store.module.css"
 import type { FoursquareResult } from "../index"
 
-import { BiMap, BiCurrentLocation, BiStar } from "react-icons/bi"
-
-import styles from "../../styles/coffee-store.module.css"
-
-type Props = {
-  coffeeStore: FoursquareResult
-}
-
-const CoffeeStore = (props: Props) => {
-  const {
-    coffeeStore: { name, location, categories, geocodes },
-  } = props
+const CoffeeStore = ({ coffeeStore }: { coffeeStore: FoursquareResult }) => {
+  const { name, location, categories, geocodes } = coffeeStore
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")

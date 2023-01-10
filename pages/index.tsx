@@ -43,6 +43,7 @@ export type FoursquareResult = {
   name: string
   related_places: any
   timezone: string
+  imgUrl?: string
 }
 
 export default function Home({
@@ -50,10 +51,11 @@ export default function Home({
 }: {
   coffeeStores: FoursquareResult[]
 }) {
-  console.log(coffeeStores)
   const handleOnButtonClick = () => {
     console.log("Button clicked!")
   }
+
+  console.log(coffeeStores)
 
   return (
     <div className={styles.container}>
@@ -91,9 +93,7 @@ export default function Home({
                   <Card
                     key={coffeeStore.fsq_id}
                     name={coffeeStore.name}
-                    imgUrl={
-                      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
-                    }
+                    imgUrl={coffeeStore.imgUrl}
                     href={`/coffee-store/${coffeeStore.fsq_id}`}
                     className={styles.card}
                   />
@@ -107,8 +107,8 @@ export default function Home({
   )
 }
 
-// pre-render the coffee store page with getStaticProps
-// only runs at build time on the server, NOT client side
+// * pre-render the coffee store page with getStaticProps
+// * only runs at build time on the server, NOT client side
 export async function getStaticProps() {
   const coffeeStoresData = await fetchCoffeeStores()
 
