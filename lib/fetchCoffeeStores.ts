@@ -71,23 +71,24 @@ const getUrlForCoffeeStores = (query: Query) => {
   return url
 }
 
-export const fetchCoffeeStores = async (): Promise<
-  FetchCoffeeResponseType[]
-> => {
+export const fetchCoffeeStores = async (
+  LatLong = "49.282622,-123.118382",
+  limit = 6
+): Promise<FetchCoffeeResponseType[]> => {
   // use Foursquare API to fetch coffee stores
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: `${process.env.FOURSQUARE_API_KEY}`,
+      Authorization: `${process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY}`,
     },
   }
 
   const response = await fetch(
     getUrlForCoffeeStores({
       query: "coffee",
-      LatLong: "49.17,-123.18",
-      limit: 6,
+      LatLong: LatLong,
+      limit: limit,
     }),
     options
   )

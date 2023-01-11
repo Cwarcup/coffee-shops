@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
+import { useRouter } from "next/router"
 import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
@@ -12,7 +13,7 @@ const CoffeeStore = ({
 }: {
   coffeeStore: FetchCoffeeResponseType
 }) => {
-  const { id, name, location, geocodes, distance, imgUrl } = coffeeStore
+  const { name, location, geocodes, distance, imgUrl } = coffeeStore
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
@@ -84,9 +85,26 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     (coffeeStore: FetchCoffeeResponseType) => coffeeStore.id === id
   )
 
+  const findCoffeeStores = coffeeStore
+    ? coffeeStore
+    : {
+        id: "4aae9450f964a5207e6220e3",
+        name: "Nespresso Boutique",
+        location: {
+          address: "674 Granville St",
+          neighborhood: ["Downtown"],
+          cross_street: "at Georgia St",
+          postcode: "V6C 1Z6",
+        },
+        geocodes: { lat: 49.282871, lng: -123.117714 },
+        distance: 52,
+        imgUrl:
+          "https://images.unsplash.com/photo-1617943750033-c450aa16e724?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzOTc3NDh8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBzaG9wc3xlbnwwfHx8fDE2NzMzODY2NDY&ixlib=rb-4.0.3&q=80&w=400",
+      }
+
   return {
     props: {
-      coffeeStore,
+      coffeeStore: findCoffeeStores,
     },
   }
 }
@@ -104,6 +122,6 @@ export async function getStaticPaths() {
   })
   return {
     paths,
-    fallback: false,
+    fallback: true,
   }
 }

@@ -25,7 +25,7 @@ export const fetchCoffeePhotos = async (): Promise<string[]> => {
   const options = {
     method: "GET",
     headers: {
-      Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+      Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`,
     },
   }
 
