@@ -46,7 +46,7 @@ export type CoffeeResType = {
   name: string
   location: {
     address: string
-    neighborhood: string
+    neighborhood: string[]
     cross_street: string
     postcode: string
   }
@@ -65,9 +65,9 @@ type Query = {
 }
 // latLong format: "49.170128,-123.182828"
 const getUrlForCoffeeStores = (query: Query) => {
-  const url = `https://api.foursquare.com/v3/places/search?query=${query.query}&ll=${
-    query.LatLong
-  }&sort=DISTANCE&limit=${query.limit.toString()}`
+  const url = `https://api.foursquare.com/v3/places/search?query=${
+    query.query
+  }&ll=${query.LatLong}&sort=DISTANCE&limit=${query.limit.toString()}`
   return url
 }
 
@@ -102,7 +102,7 @@ export const fetchCoffeeStores = async (
       name: result.name,
       location: {
         address: result.location?.address ?? "",
-        neighborhood: result.location?.neighborhood ?? "",
+        neighborhood: result.location?.neighborhood ?? [""],
         cross_street: result.location?.cross_street ?? "",
         postcode: result.location?.postcode ?? "",
       },

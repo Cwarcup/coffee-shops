@@ -11,11 +11,17 @@ import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
-export default function Home({ coffeeStores }: { coffeeStores: CoffeeResType[] }) {
+export default function Home({
+  coffeeStores,
+}: {
+  coffeeStores: CoffeeResType[]
+}) {
   const { latLong, handleTrackLocation, locationErrorMsg, isFindingLocation } =
     useUserLocation()
 
-  const [fetchedStores, setFetchedStores] = useState<CoffeeResType[] | null>(null)
+  const [fetchedStores, setFetchedStores] = useState<CoffeeResType[] | null>(
+    null
+  )
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   const handleOnButtonClick = () => {
@@ -42,7 +48,10 @@ export default function Home({ coffeeStores }: { coffeeStores: CoffeeResType[] }
     <div className={styles.container}>
       <Head>
         <title>Coffee Critic</title>
-        <meta name="description" content="Discover local coffee shops in your area! " />
+        <meta
+          name="description"
+          content="Discover local coffee shops in your area! "
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

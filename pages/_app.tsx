@@ -1,4 +1,6 @@
 import "../styles/globals.css"
+import StoreProvider from "../context/store-context"
+
 import type { AppProps } from "next/app"
 import { IBM_Plex_Sans } from "@next/font/google"
 
@@ -10,13 +12,13 @@ const ibm_plex_sans = IBM_Plex_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <StoreProvider>
       <style jsx global>{`
         html {
           font-family: ${ibm_plex_sans.style.fontFamily};
         }
       `}</style>
       <Component {...pageProps} />
-    </>
+    </StoreProvider>
   )
 }
