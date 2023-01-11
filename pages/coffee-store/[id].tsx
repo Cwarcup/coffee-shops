@@ -11,6 +11,11 @@ import type { CoffeeResType } from "../../lib/fetchCoffeeStores"
 const CoffeeStore = ({ coffeeStore }: { coffeeStore: CoffeeResType }) => {
   const { name, location, geocodes, distance, imgUrl } = coffeeStore
 
+  const router = useRouter()
+  const id = router.query.id;
+
+
+
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
   }
