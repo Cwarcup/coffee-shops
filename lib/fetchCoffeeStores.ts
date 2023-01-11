@@ -41,7 +41,7 @@ type FoursquareResult = {
 }
 
 // type of mutated data response from FourSquare API and Unsplash
-export type FetchCoffeeResponseType = {
+export type CoffeeResType = {
   id: string
   name: string
   location: {
@@ -65,16 +65,16 @@ type Query = {
 }
 // latLong format: "49.170128,-123.182828"
 const getUrlForCoffeeStores = (query: Query) => {
-  const url = `https://api.foursquare.com/v3/places/search?query=${
-    query.query
-  }&ll=${query.LatLong}&sort=DISTANCE&limit=${query.limit.toString()}`
+  const url = `https://api.foursquare.com/v3/places/search?query=${query.query}&ll=${
+    query.LatLong
+  }&sort=DISTANCE&limit=${query.limit.toString()}`
   return url
 }
 
 export const fetchCoffeeStores = async (
   LatLong = "49.282622,-123.118382",
   limit = 6
-): Promise<FetchCoffeeResponseType[]> => {
+): Promise<CoffeeResType[]> => {
   // use Foursquare API to fetch coffee stores
   const options = {
     method: "GET",

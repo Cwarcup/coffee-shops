@@ -2,7 +2,7 @@ import Head from "next/head"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { fetchCoffeeStores } from "../lib/fetchCoffeeStores"
-import type { FetchCoffeeResponseType } from "../lib/fetchCoffeeStores"
+import type { CoffeeResType } from "../lib/fetchCoffeeStores"
 
 import useUserLocation from "../hooks/useUserLocation"
 
@@ -11,17 +11,11 @@ import heroImage from "../public/static/hero-image.svg"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 
-export default function Home({
-  coffeeStores,
-}: {
-  coffeeStores: FetchCoffeeResponseType[]
-}) {
+export default function Home({ coffeeStores }: { coffeeStores: CoffeeResType[] }) {
   const { latLong, handleTrackLocation, locationErrorMsg, isFindingLocation } =
     useUserLocation()
 
-  const [fetchedCoffeeStores, setFetchedCoffeeStores] = useState<
-    FetchCoffeeResponseType[] | null
-  >(null)
+  const [fetchedStores, setFetchedStores] = useState<CoffeeResType[] | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   const handleOnButtonClick = () => {
@@ -33,7 +27,7 @@ export default function Home({
       if (latLong) {
         try {
           const getNearbyStores = await fetchCoffeeStores(latLong, 6)
-          setFetchedCoffeeStores(getNearbyStores)
+          setFetchedStores(getNearbyStores)
         } catch (error) {
           console.log(error)
           setErrorMsg("Error fetching coffee stores")
@@ -44,15 +38,11 @@ export default function Home({
     setCoffeeStoresByLocation()
   }, [latLong])
 
-  console.log(fetchedCoffeeStores)
   return (
     <div className={styles.container}>
       <Head>
         <title>Coffee Critic</title>
-        <meta
-          name="description"
-          content="Discover local coffee shops in your area! "
-        />
+        <meta name="description" content="Discover local coffee shops in your area! " />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -76,11 +66,11 @@ export default function Home({
           />
         </div>
 
-        {fetchedCoffeeStores ? (
+        {fetchedStores ? (
           <div className={styles.sectionWrapper}>
             <h2 className={styles.heading2}>Stores Near Me</h2>
             <div className={styles.cardLayout}>
-              {fetchedCoffeeStores.map((coffeeStore) => {
+              {fetchedStores.map((coffeeStore) => {
                 return (
                   <Card
                     key={coffeeStore.id}

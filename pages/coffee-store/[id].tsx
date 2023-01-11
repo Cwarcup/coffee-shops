@@ -6,13 +6,9 @@ import { useRouter } from "next/router"
 import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
-import type { FetchCoffeeResponseType } from "../../lib/fetchCoffeeStores"
+import type { CoffeeResType } from "../../lib/fetchCoffeeStores"
 
-const CoffeeStore = ({
-  coffeeStore,
-}: {
-  coffeeStore: FetchCoffeeResponseType
-}) => {
+const CoffeeStore = ({ coffeeStore }: { coffeeStore: CoffeeResType }) => {
   const { name, location, geocodes, distance, imgUrl } = coffeeStore
 
   const handleUpvoteClick = () => {
@@ -28,11 +24,7 @@ const CoffeeStore = ({
       <div className={styles.container}>
         <div className={styles.col1}>
           <div className={styles.backToHomeLink}>
-            <Link
-              href="/"
-              scroll={false}
-              className={styles.backToHomeContainer}
-            >
+            <Link href="/" scroll={false} className={styles.backToHomeContainer}>
               <BiArrowBack className={styles.backToHomeArrow} />
               Back to home
             </Link>
@@ -82,7 +74,7 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 
   // find the coffee store with the id from the URL
   const coffeeStore = coffeeStoresData.find(
-    (coffeeStore: FetchCoffeeResponseType) => coffeeStore.id === id
+    (coffeeStore: CoffeeResType) => coffeeStore.id === id
   )
 
   const findCoffeeStores = coffeeStore
@@ -113,7 +105,7 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
 export async function getStaticPaths() {
   const coffeeStoresData = await fetchCoffeeStores()
 
-  const paths = coffeeStoresData.map((coffeeStore: FetchCoffeeResponseType) => {
+  const paths = coffeeStoresData.map((coffeeStore: CoffeeResType) => {
     return {
       params: {
         id: coffeeStore.id,
