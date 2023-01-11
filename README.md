@@ -31,4 +31,6 @@
 
 Making the dynamic store was tricky. I wanted to prerender the static pages, but also wanted to use the route to handle pages generated from a fetch request. The fetch request pages would be generated if a user requests to use their location to get nearby stores. 
 
-I needed to tell the dynamic route to use static props if the user is not using their location, and use the `StoreContext` if the user is using their location. I set the `fallback` to `true` and used the `useRouter` hook to get the `query` object. I used the `query` object to check if the user is using their location. If the user is using their location, I used the `StoreContext` to get the store data. If the user is not using their location, I used the `getStaticProps` function to get the store data.
+I needed to tell the dynamic route to use static props if the user is not using their location, and use the `StoreContext` if the user is using their location. I set the `fallback` to `true` and used the `useRouter` hook to get the `query` object. I used the `query` object to check if the user is using their location. If the user is using their location, I used the `StoreContext` to get the store data. 
+
+In all, if the `id` provided by the router object does not match the statically generated paths, then find the matching `id` in the `StoreContext` and return the store data. If the `id` does not match the `StoreContext`, then return a 404 error.
