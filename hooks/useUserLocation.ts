@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { setLatLong, StoreContext } from "../context/store-context"
 
 type PositionType = {
   coords: {
@@ -9,15 +10,17 @@ type PositionType = {
 
 // custom hook to get user location
 const useUserLocation = () => {
+  const { dispatch } = useContext(StoreContext)
+
   const [locationErrorMsg, setLocationErrorMsg] = useState("")
-  const [latLong, setLatLong] = useState("")
+
   const [isFindingLocation, setIsFindingLocation] = useState(false)
 
   const success = (position: PositionType) => {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
 
-    setLatLong(`${latitude},${longitude}`)
+    dispatch(setLatLong(`${latitude},${longitude}`))
     setLocationErrorMsg("")
     setIsFindingLocation(false)
   }
@@ -39,7 +42,6 @@ const useUserLocation = () => {
   }
 
   return {
-    latLong,
     handleTrackLocation,
     locationErrorMsg,
     isFindingLocation,

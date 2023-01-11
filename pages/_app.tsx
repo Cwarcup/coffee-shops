@@ -12,13 +12,15 @@ const ibm_plex_sans = IBM_Plex_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <StoreProvider>
+    <>
       <style jsx global>{`
         html {
           font-family: ${ibm_plex_sans.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
-    </StoreProvider>
+      <StoreProvider>
+        <Component {...pageProps} />
+      </StoreProvider>
+    </>
   )
 }
