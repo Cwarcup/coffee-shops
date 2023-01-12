@@ -79,3 +79,7 @@ It was very similar to Supabase, however I like the Supabase docs/guides more si
 This API route is used to return a store if it exists **or** create a new record if it is not found. This was done by checking the request method used and destructuring the request query. I then checked if the store `id` existed in the database to determine if it was a new record.
 
 See  Airtable docs [here](https://airtable.com/appYvz3JZAuMoLwH8/api/docs#javascript/table:coffee-stores:list) for code examples.
+
+### SWR
+
+[SWR](https://swr.vercel.app/) (`stale-while-revalidate`) is a hook library created by the team at Vercel. SWR was used to update the vote count for a given coffee shop. SWR is a React hook library for remote data fetching. It is similar to React Query, but it is more lightweight.

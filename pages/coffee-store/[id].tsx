@@ -3,6 +3,7 @@ import Image from "next/image"
 import Head from "next/head"
 import clx from "classnames"
 import { useRouter } from "next/router"
+import useSWR from "swr"
 import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
@@ -21,6 +22,8 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
   // context state,
   const { state } = useContext(StoreContext)
 
+  const [votingCount, setVotingCount] = useState<number>(0)
+
   // * source of truth for the coffee stores
   const [store, setStore] = useState<CoffeeResType | null>(
     initialProps?.coffeeStore || null
@@ -28,6 +31,8 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
 
   // create coffee store in airtable db if this is a new coffee store
   const handleCreateCoffeeStore = async (coffeeStore: CoffeeResType) => {
+    console.log("Creating coffee")
+    console.log(coffeeStore)
     try {
       const {
         id,
@@ -81,7 +86,27 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
+    let newVotingCount = votingCount + 1
+    setVotingCount(newVotingCount)
   }
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+  const { data, error } = useSWR(
+    `/api/getCoffeeStoresById?id=${id}`,
+    fetcher
+  ) as {
+    data: AirtableReqBody[]
+    error: any
+  }
+
+  // useEffect to handle the vote
+  useEffect(() => {
+    // onn load, make a request to /api/getCoffeeStoreById to get the voting count
+    if (data && data.length > 0) {
+      setVotingCount(data[0].voting)
+    }
+  }, [data])
 
   if (!store) return <div>Loading...</div>
 
@@ -127,7 +152,7 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
           </div>
           <div className={styles.iconWrapper}>
             <BiStar className={styles.icon} />
-            <p className={styles.text}>{0}</p>
+            <p className={styles.text}>{votingCount}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpvoteClick}>
             Upvote
