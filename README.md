@@ -70,3 +70,12 @@ export async function getStaticProps() {
 
 I used Airtable to store coffee shop data in a database for the situation where somebody visits a coffee ship (e.g., "http://localhost:3000/coffee-store/4aae9450f964a5207e6220e3") which is **not** statically generated and is **not** stored in context (client side rendering). This would occur is someone shared a link to a store near them. In summary, if a store is not found in SSG, then use context. If context is empty, use Airtable.
 
+This was my first time using Airtable. I found the web UI easy to navigate and the docs were easy to follow. It was nice to see code examples pertaining to the exact table from the database. 
+
+It was very similar to Supabase, however I like the Supabase docs/guides more since they are easier to navigate.
+
+#### createCoffeeStore
+
+This API route is used to return a store if it exists **or** create a new record if it is not found. This was done by checking the request method used and destructuring the request query. I then checked if the store `id` existed in the database to determine if it was a new record.
+
+See  Airtable docs [here](https://airtable.com/appYvz3JZAuMoLwH8/api/docs#javascript/table:coffee-stores:list) for code examples.

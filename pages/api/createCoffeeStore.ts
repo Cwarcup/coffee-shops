@@ -21,8 +21,10 @@ const createCoffeeStore = async (req: NextApiRequest, res: NextApiResponse) => {
       distance,
       imgUrl,
       voting,
-    } = req.query as AirtableReqBody
+    } = req.body as AirtableReqBody
+
     try {
+      // make sure the id is in the query
       if (id) {
         const records = await findRecordByFilter(id)
 
@@ -35,7 +37,7 @@ const createCoffeeStore = async (req: NextApiRequest, res: NextApiResponse) => {
             const createRecord = await table.create([
               {
                 fields: {
-                  id,
+                  id: id.toString(),
                   name,
                   address,
                   neighborhood,
@@ -45,7 +47,7 @@ const createCoffeeStore = async (req: NextApiRequest, res: NextApiResponse) => {
                   lng: parseInt(lng),
                   distance: parseInt(distance),
                   imgUrl,
-                  voting: voting ? parseInt(voting) : 0,
+                  voting: parseInt(voting),
                 },
               },
             ])
@@ -53,14 +55,17 @@ const createCoffeeStore = async (req: NextApiRequest, res: NextApiResponse) => {
             res.status(200).json(records)
           } else {
             // if missing a field
-            res.status(400).json({ msg: "Missing required field(s): Name" })
+            res.status(400).json({
+              msg: "Missing required field 'id' or 'name'. Try again.",
+            })
           }
         }
+      } else {
+        res.status(400).json({ msg: "Missing required field 'id'. Try again." })
       }
     } catch (err) {
       console.error("Error creating or finding a store", err)
-      res.statusCode = 500
-      res.json({ message: "Error creating or finding a store", err })
+      res.status(500).json({ msg: "Error creating or finding a store", err })
     }
   }
 }
