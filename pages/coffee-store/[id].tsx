@@ -22,7 +22,9 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
   const { state } = useContext(StoreContext)
 
   // * source of truth for the coffee stores
-  const [store, setStore] = useState<CoffeeResType | null>(null)
+  const [store, setStore] = useState<CoffeeResType | null>(
+    initialProps?.coffeeStore || null
+  )
 
   // create coffee store in airtable db if this is a new coffee store
   const handleCreateCoffeeStore = async (coffeeStore: CoffeeResType) => {
@@ -69,17 +71,13 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
         (store) => store.id === id
       ) as CoffeeResType
 
-      console.log("getStore", getStore)
       setStore(getStore)
       handleCreateCoffeeStore(getStore)
     } else {
-      // if the initialProps matches a static path, then use the initialProps to set the store state
-      // if (initialProps?.coffeeStore) {
-      //   setStore(initialProps.coffeeStore)
-      // }
+      // create the coffee store from static site generation (build time)
       handleCreateCoffeeStore(initialProps?.coffeeStore as CoffeeResType)
     }
-  }, [initialProps, id, state.coffeeStores])
+  }, [initialProps, id, state.coffeeStores, initialProps?.coffeeStore])
 
   const handleUpvoteClick = () => {
     console.log("Upvote clicked!")
@@ -129,7 +127,7 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
           </div>
           <div className={styles.iconWrapper}>
             <BiStar className={styles.icon} />
-            <p className={styles.text}>{1}</p>
+            <p className={styles.text}>{0}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpvoteClick}>
             Upvote
