@@ -4,7 +4,13 @@ import Head from "next/head"
 import clx from "classnames"
 import { useRouter } from "next/router"
 import useSWR from "swr"
-import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
+import {
+  BiMap,
+  BiCurrentLocation,
+  BiStar,
+  BiArrowBack,
+  BiLoader,
+} from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
 import type { CoffeeResType, AirtableReqBody } from "../../interfaces"
@@ -31,8 +37,6 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
 
   // create coffee store in airtable db if this is a new coffee store
   const handleCreateCoffeeStore = async (coffeeStore: CoffeeResType) => {
-    console.log("Creating coffee")
-    console.log(coffeeStore)
     try {
       const {
         id,
@@ -92,12 +96,13 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-  const { data, error } = useSWR(
+  const { data, error, isLoading } = useSWR(
     `/api/getCoffeeStoresById?id=${id}`,
     fetcher
   ) as {
     data: AirtableReqBody[]
     error: any
+    isLoading: boolean
   }
 
   // useEffect to handle the vote
@@ -109,6 +114,14 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
   }, [data])
 
   if (!store) return <div>Loading...</div>
+
+  const vote = isLoading ? (
+    <BiLoader />
+  ) : error ? (
+    "Error fetching voting count"
+  ) : (
+    votingCount
+  )
 
   return (
     <>
@@ -152,7 +165,7 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
           </div>
           <div className={styles.iconWrapper}>
             <BiStar className={styles.icon} />
-            <p className={styles.text}>{votingCount}</p>
+            <p className={styles.text}>{vote}</p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpvoteClick}>
             Upvote
