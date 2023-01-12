@@ -7,6 +7,7 @@ type Query = {
   limit: number
 }
 // latLong format: "49.170128,-123.182828"
+// getUrlForCoffeeStores is a function that returns a url for fetching coffee stores
 const getUrlForCoffeeStores = (query: Query) => {
   const url = `https://api.foursquare.com/v3/places/search?query=${
     query.query
@@ -14,6 +15,7 @@ const getUrlForCoffeeStores = (query: Query) => {
   return url
 }
 
+// fetchCoffeeStores is a function that fetches coffee stores from Foursquare API
 export const fetchCoffeeStores = async (
   LatLong = "49.282622,-123.118382",
   limit = 6

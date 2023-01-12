@@ -7,7 +7,7 @@ import type { CoffeeResType } from "../interfaces"
 import useUserLocation from "../hooks/useUserLocation"
 
 import styles from "../styles/Home.module.css"
-import heroImage from "../public/static/hero-image.svg"
+import heroImage from "../public/static/hero-image.png"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 import { StoreContext, setCoffeeStores } from "../context/store-context"
@@ -36,7 +36,12 @@ export default function Home({
     async function setCoffeeStoresByLocation() {
       if (state.latLong) {
         try {
-          const getNearbyStores = await fetchCoffeeStores(state.latLong, 6)
+          // make a request to our internal server
+          const getNearbyStores = await fetch(
+            `api/getCoffeeStoresByLocation?latLong=${state.latLong}&limit=6`
+          ).then((res) => res.json())
+
+          console.log("fetched stores", getNearbyStores)
           // update the coffeeStores in the context with nearby stores
           dispatch(setCoffeeStores(getNearbyStores))
         } catch (error) {
@@ -72,10 +77,11 @@ export default function Home({
 
         <div className={styles.heroImage}>
           <Image
-            src={heroImage}
+            // src={heroImage}
+            src="/static/hero-image.svg"
             alt="Coffee Cup Hero Image"
-            width={500}
-            height={500}
+            width={800}
+            height={343}
             priority
           />
         </div>
@@ -127,7 +133,13 @@ export default function Home({
 // * pre-render the coffee store page with getStaticProps
 // * only runs at build time on the server, NOT client side
 export async function getStaticProps() {
+  //! do not make internal API requests here. The server may not be spun up yet at the time of build
   const coffeeStoresData = await fetchCoffeeStores()
+
+  // DO NOT DO THIS
+  // const getNearbyStores = await fetch(
+  //   `api/getCoffeeStoresByLocation?latLong=42,123&limit=6`
+  // ).then((res) => res.json())
 
   return {
     props: {

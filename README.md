@@ -40,3 +40,28 @@ In all, if the `id` provided by the router object does not match the statically 
 API routes are built into Next.js by using an `api` folder within the `pages` directory. The API routes are serverless functions that are deployed as AWS Lambda functions. Learn more about API routes with Next.js [here](https://nextjs.org/docs/api-routes/introduction).
 
 I decided to create an API to handle votes for a given coffee store. I used Airtable to create my own RESTful API.
+
+I also learnt about creating [catch all](https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes) routes with `[...slug]`. This is useful when you want to create a dynamic route that can handle multiple parameters. I used this to create a dynamic route for the coffee shop page.
+
+I also create an API to query coffee stores. This allowed me to make requests to "/api/getCoffeeStoresByLocation?latLong=34,-118&limit=30" to get coffee stores near a given location. I used this API to get coffee stores near the user's location and limit the number of coffee stores to 30. This wasn't necessary to do, but I wanted to learn how to create an API to query data. 
+
+> Side note: Do not call API routes when using SSG (i.e., when using `getStaticProps` or `getStaticPaths`). Instead, write the server-side code directly in `getStaticProps` or `getStaticPaths`. API routes are only meant to be used for API routes. If you call an API route, SSG may fail at build time because the API routes do not exist. Read more [here](https://nextjs.org/docs/basic-features/data-fetching/get-static-props#write-server-side-code-directly).
+
+```tsx
+// * only runs at build time on the server, NOT client side
+export async function getStaticProps() {
+  // Good!
+  const coffeeStoresData = await fetchCoffeeStores()
+
+  // DO NOT DO THIS !! BAD!
+  // const coffeeStoresData = await fetch(
+  //   `api/getCoffeeStoresByLocation?latLong=42,123&limit=6`
+  // ).then((res) => res.json())
+
+  return {
+    props: {
+      coffeeStores: coffeeStoresData,
+    },
+  }
+}
+```
