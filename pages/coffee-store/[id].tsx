@@ -36,10 +36,7 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
         imgUrl,
       } = coffeeStore
 
-      console.log("Creating coffee")
-      console.log(coffeeStore)
-
-      const res = await fetch("/api/create-coffee-store", {
+      const res = await fetch("/api/createCoffeeStore", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,12 +71,13 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
 
       console.log("getStore", getStore)
       setStore(getStore)
+      handleCreateCoffeeStore(getStore)
     } else {
       // if the initialProps matches a static path, then use the initialProps to set the store state
-      if (initialProps?.coffeeStore) {
-        setStore(initialProps.coffeeStore)
-      }
-      // handleCreateCoffeeStore(initialProps?.coffeeStore as CoffeeResType)
+      // if (initialProps?.coffeeStore) {
+      //   setStore(initialProps.coffeeStore)
+      // }
+      handleCreateCoffeeStore(initialProps?.coffeeStore as CoffeeResType)
     }
   }, [initialProps, id, state.coffeeStores])
 
