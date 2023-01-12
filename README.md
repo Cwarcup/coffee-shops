@@ -65,3 +65,8 @@ export async function getStaticProps() {
   }
 }
 ```
+
+### Airtable
+
+I used Airtable to store coffee shop data in a database for the situation where somebody visits a coffee ship (e.g., "http://localhost:3000/coffee-store/4aae9450f964a5207e6220e3") which is **not** statically generated and is **not** stored in context (client side rendering). This would occur is someone shared a link to a store near them. In summary, if a store is not found in SSG, then use context. If context is empty, use Airtable.
+
