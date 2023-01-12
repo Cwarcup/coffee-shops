@@ -1,5 +1,3 @@
-import useUserLocation from "../../hooks/useUserLocation"
-
 import styles from "./banner.module.css"
 
 type Props = {

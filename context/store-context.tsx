@@ -1,6 +1,5 @@
 import { createContext, useReducer } from "react"
-
-import type { CoffeeResType } from "../lib/fetchCoffeeStores"
+import type { CoffeeResType } from "../interfaces"
 
 // define the action types
 enum ACTION_TYPES {

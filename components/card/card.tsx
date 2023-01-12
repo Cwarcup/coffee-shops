@@ -7,9 +7,7 @@ import styles from "./card.module.css"
 type Props = {
   key: string
   name: string
-  imgUrl?: string
-  address?: string
-  neighbourhood?: string
+  imgUrl: string
   href: string
   className?: string
 }

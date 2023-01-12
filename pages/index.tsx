@@ -2,7 +2,7 @@ import Head from "next/head"
 import Image from "next/image"
 import { useEffect, useState, useContext } from "react"
 import { fetchCoffeeStores } from "../lib/fetchCoffeeStores"
-import type { CoffeeResType } from "../lib/fetchCoffeeStores"
+import type { CoffeeResType } from "../interfaces"
 
 import useUserLocation from "../hooks/useUserLocation"
 

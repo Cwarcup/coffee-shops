@@ -6,15 +6,15 @@ import { useRouter } from "next/router"
 import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
-import type { CoffeeResType } from "../../lib/fetchCoffeeStores"
+import type { CoffeeResType } from "../../interfaces"
 import { useEffect, useState, useContext } from "react"
 import { StoreContext } from "../../context/store-context"
 
 type InitialPropsType = {
   coffeeStore: CoffeeResType
-}
+} | null
 
-const CoffeeStore = (initialProps: InitialPropsType | null) => {
+const CoffeeStore = (initialProps: InitialPropsType) => {
   const router = useRouter()
   const id = router.query.id // id from the URL to identify the coffee store.
 
@@ -43,7 +43,6 @@ const CoffeeStore = (initialProps: InitialPropsType | null) => {
     console.log("Upvote clicked!")
   }
 
-  
   if (!store) return <div>Loading...</div>
 
   return (

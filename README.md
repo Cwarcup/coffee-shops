@@ -34,3 +34,9 @@ Making the dynamic store was tricky. I wanted to prerender the static pages, but
 I needed to tell the dynamic route to use static props if the user is not using their location, and use the `StoreContext` if the user is using their location. I set the `fallback` to `true` and used the `useRouter` hook to get the `query` object. I used the `query` object to check if the user is using their location. If the user is using their location, I used the `StoreContext` to get the store data. 
 
 In all, if the `id` provided by the router object does not match the statically generated paths, then find the matching `id` in the `StoreContext` and return the store data. If the `id` does not match the `StoreContext`, then return a 404 error.
+
+## Serverless Function with Next.js
+
+API routes are built into Next.js by using an `api` folder within the `pages` directory. The API routes are serverless functions that are deployed as AWS Lambda functions. Learn more about API routes with Next.js [here](https://nextjs.org/docs/api-routes/introduction).
+
+I decided to create an API to handle votes for a given coffee store. I used Airtable to create my own RESTful API.
