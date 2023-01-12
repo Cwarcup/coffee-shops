@@ -5,14 +5,14 @@ export type CoffeeResType = {
   location: {
     address: string
     neighborhood: string[]
-    cross_street: string
-    postcode: string
+    cross_street?: string
+    postcode?: string
   }
   geocodes: {
-    lat: number
-    lng: number
+    lat?: number
+    lng?: number
   }
-  distance: number
+  distance?: number
   imgUrl: string
 }
 
@@ -54,4 +54,23 @@ export type FoursquareResult = {
   related_places: any
   timezone: string
   imgUrl?: string
+}
+
+export type AirtableReqBody = {
+  id: string
+  name: string
+  address: string
+  neighborhood: string
+  cross_street: string
+  postcode: string
+  lat: any
+  lng: any
+  distance: any
+  imgUrl: string
+  voting?: any
+}
+
+export type AirtableRecord = {
+  id: string
+  fields: AirtableReqBody[]
 }
