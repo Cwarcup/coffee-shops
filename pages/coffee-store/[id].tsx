@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { BiMap, BiCurrentLocation, BiStar, BiArrowBack } from "react-icons/bi"
 import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 import styles from "../../styles/coffee-store.module.css"
-import type { CoffeeResType } from "../../interfaces"
+import type { CoffeeResType, AirtableReqBody } from "../../interfaces"
 import { useEffect, useState, useContext } from "react"
 import { StoreContext } from "../../context/store-context"
 
@@ -24,18 +24,62 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
   // * source of truth for the coffee stores
   const [store, setStore] = useState<CoffeeResType | null>(null)
 
+  // create coffee store in airtable db if this is a new coffee store
+  const handleCreateCoffeeStore = async (coffeeStore: CoffeeResType) => {
+    try {
+      const {
+        id,
+        name,
+        location: { address, neighborhood, cross_street, postcode },
+        geocodes: { lat, lng },
+        distance,
+        imgUrl,
+      } = coffeeStore
+
+      console.log("Creating coffee")
+      console.log(coffeeStore)
+
+      const res = await fetch("/api/create-coffee-store", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          name,
+          voting: 0,
+          address: address || "",
+          neighborhood: neighborhood[0],
+          cross_street: cross_street || "",
+          postcode: postcode || "",
+          lat: lat || 0,
+          lng: lng || 0,
+          distance: distance || 0,
+          imgUrl: imgUrl || "",
+        } as AirtableReqBody),
+      })
+
+      const dbCoffeeStore = await res.json()
+    } catch (error) {
+      console.error("Error creating coffee store", error)
+    }
+  }
+
   useEffect(() => {
     // if the initialProps does not match a static path, then use the context to set the store state
     if (initialProps?.coffeeStore === null) {
       const getStore = state.coffeeStores?.find(
         (store) => store.id === id
       ) as CoffeeResType
+
+      console.log("getStore", getStore)
       setStore(getStore)
     } else {
       // if the initialProps matches a static path, then use the initialProps to set the store state
       if (initialProps?.coffeeStore) {
         setStore(initialProps.coffeeStore)
       }
+      // handleCreateCoffeeStore(initialProps?.coffeeStore as CoffeeResType)
     }
   }, [initialProps, id, state.coffeeStores])
 

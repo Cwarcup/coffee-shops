@@ -4,7 +4,7 @@ import type { CoffeeResType, FoursquareResult } from "../interfaces"
 type Query = {
   query: string
   LatLong: string
-  limit: number
+  limit: string
 }
 // latLong format: "49.170128,-123.182828"
 // getUrlForCoffeeStores is a function that returns a url for fetching coffee stores
@@ -17,8 +17,8 @@ const getUrlForCoffeeStores = (query: Query) => {
 
 // fetchCoffeeStores is a function that fetches coffee stores from Foursquare API
 export const fetchCoffeeStores = async (
-  LatLong = "49.282622,-123.118382",
-  limit = 6
+  LatLong = "49.2745606,-123.1240756",
+  limit = "6"
 ): Promise<CoffeeResType[]> => {
   // use Foursquare API to fetch coffee stores
   const options = {

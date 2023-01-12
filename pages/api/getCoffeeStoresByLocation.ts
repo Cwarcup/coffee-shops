@@ -4,7 +4,7 @@ import { fetchCoffeeStores } from "../../lib/fetchCoffeeStores"
 
 type Data = {
   latLong: string
-  limit: number
+  limit: string
 }
 
 const getCoffeeStoresByLocation = async (
@@ -14,8 +14,7 @@ const getCoffeeStoresByLocation = async (
   // configure latLong and limit
 
   try {
-    const { latLong, limit } = req.body as Data
-
+    const { latLong, limit } = req.query as Data
     const response = await fetchCoffeeStores(latLong, limit)
     res.status(200).json(response)
   } catch (error) {

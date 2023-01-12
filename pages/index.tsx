@@ -41,6 +41,8 @@ export default function Home({
             `api/getCoffeeStoresByLocation?latLong=${state.latLong}&limit=6`
           ).then((res) => res.json())
 
+          console.log("latLong", state.latLong)
+
           console.log("fetched stores", getNearbyStores)
           // update the coffeeStores in the context with nearby stores
           dispatch(setCoffeeStores(getNearbyStores))
