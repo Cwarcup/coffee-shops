@@ -88,10 +88,27 @@ const CoffeeStore = (initialProps: InitialPropsType) => {
     }
   }, [initialProps, id, state.coffeeStores, initialProps?.coffeeStore])
 
-  const handleUpvoteClick = () => {
-    console.log("Upvote clicked!")
-    let newVotingCount = votingCount + 1
-    setVotingCount(newVotingCount)
+  const handleUpvoteClick = async () => {
+    try {
+      const response = await fetch("/api/upvoteCoffeeStore", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      })
+
+      const dbCoffeeStore = await response.json()
+
+      if (dbCoffeeStore && dbCoffeeStore.length > 0) {
+        let count = votingCount + 1
+        setVotingCount(count)
+      }
+    } catch (err) {
+      console.error("Error upvoting the coffee store", err)
+    }
   }
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json())

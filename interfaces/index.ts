@@ -59,6 +59,7 @@ export type FoursquareResult = {
 export type AirtableReqBody = {
   id: string
   name: string
+  voting: any
   address: string
   neighborhood: string
   cross_street: string
@@ -67,10 +68,9 @@ export type AirtableReqBody = {
   lng: any
   distance: any
   imgUrl: string
-  voting?: any
 }
 
 export type AirtableRecord = {
   id: string
-  fields: AirtableReqBody[]
+  fields: AirtableReqBody
 }

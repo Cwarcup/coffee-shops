@@ -12,6 +12,8 @@ const getCoffeeStoresById = async (
   try {
     const coffeeStore = await findRecordByFilter(id)
 
+
+
     // if the record exists, return the record
     if (coffeeStore.length !== 0) {
       return res.json(coffeeStore)
