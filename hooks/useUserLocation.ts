@@ -36,7 +36,6 @@ const useUserLocation = () => {
       setLocationErrorMsg("Geolocation is not supported by your browser")
       setIsFindingLocation(false)
     } else {
-      // status.textContent = "Locating…";
       navigator.geolocation.getCurrentPosition(success, error)
     }
   }

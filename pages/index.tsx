@@ -7,7 +7,6 @@ import type { CoffeeResType } from "../interfaces"
 import useUserLocation from "../hooks/useUserLocation"
 
 import styles from "../styles/Home.module.css"
-import heroImage from "../public/static/hero-image.png"
 import Banner from "../components/banner/banner"
 import Card from "../components/card/card"
 import { StoreContext, setCoffeeStores } from "../context/store-context"
